@@ -2,26 +2,18 @@ import { ApplicationConfig } from '@angular/core';
 import { provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
-import { initializeApp } from 'firebase/app'; // FirebaseApp için doğru import
-import { getAuth } from 'firebase/auth'; // FirebaseAuth için doğru import
-import { getFirestore } from 'firebase/firestore'; // FirebaseFirestore için doğru import
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideAuth, getAuth } from '@angular/fire/auth';  // Firebase Auth sağlamak için
 import { environment } from '../environment/environment';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore'; // Firestore'u sağlamak için
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    {
-      provide: 'FirebaseApp', // 'FirebaseApp' yerine bir string kullanabiliriz
-      useFactory: () => initializeApp(environment.firebase),
-    },
-    {
-      provide: 'FirebaseAuth', // 'FirebaseAuth' yerine bir string kullanabiliriz
-      useFactory: () => getAuth(),
-    },
-    {
-      provide: 'FirebaseFirestore', // 'FirebaseFirestore' yerine bir string kullanabiliriz
-      useFactory: () => getFirestore(),
-    }
+    provideFirebaseApp(() => initializeApp(environment.firebase)), // Firebase app'ı sağla
+    provideAuth(() => getAuth()), // Firebase Auth'u sağla
+    provideFirestore(() => getFirestore()) // Firestore sağlama
+
   ]
 };
