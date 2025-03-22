@@ -1,0 +1,20 @@
+<form (ngSubmit)="register()">
+    <input type="email" [(ngModel)]="email" placeholder="Email" name="email" required />
+    <input type="password" [(ngModel)]="password" placeholder="Password" name="password" required />
+    
+    <!-- Grup ve alt grup seçimi -->
+    <select [(ngModel)]="group" name="group" required>
+      <option value="IT">IT</option>
+      <option value="SOURCING">SOURCING</option>
+      <option value="DEPO">DEPO</option>
+    </select>
+  
+    <select [(ngModel)]="subgroup" name="subgroup" required>
+      <option value="Network">Network</option>
+      <option value="Yazılım">Yazılım</option>
+      <!-- Alt grup seçeneklerini burada dinamik hale getirebiliriz -->
+    </select>
+    
+    <button type="submit">Register</button>
+  </form>
+  
